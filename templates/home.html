@@ -1,0 +1,64 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container">
+  <div class="card text-center">
+    <div class="card-header">Your Todos!</div>
+    <div class="card-body">
+      <h5 class="card-title">List of your Todos!</h5>
+      <p class="card-text">
+        Information regarding stuff that needs to be complete
+      </p>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Info</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <a href="/add" class="btn btn-primary">Add a new Todo!</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tableBody = document.querySelector(".table tbody")
+
+  fetch("http://localhost:8000/todos/user")
+    .then((res) => res.json())
+    .then((todos) => {
+      if (todos.detail) {
+        throw new Error("user not authorized")
+      }
+      todos.forEach((todo, index) => {
+        tableBody.insertAdjacentHTML(
+          "beforeend",
+          `
+        <tr class="pointer ${todo.complete ? "alert alert-success" : ""}">
+          <td>${index + 1}</td>
+          <td id="td1" class="${todo.complete ? "strike-through-td" : ""}">${
+            todo.title
+          }</td>
+          <td>
+            <button onclick="window.location.href='/todos/complete/${
+              todo.id
+            }'"  type="button" class="btn btn-success">${
+            todo.complete ? "Undo" : "Complete"
+          }</button>
+            <button type="button" class="btn btn-info" onclick="window.location.href='edit/${
+              todo.id
+            }'">Edit</button>
+          </td>
+        </tr>
+        `
+        )
+      })
+    })
+    .catch((err) => {
+      window.location.href = "/login"
+    })
+</script>
+{% endblock content %}

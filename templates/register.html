@@ -1,0 +1,95 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">Register</div>
+    <div class="card-body">
+      <form class="register-form">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" />
+          </div>
+          <div class="form-group col-md-6">
+            <label>Username</label>
+            <input type="username" class="form-control" name="username" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>First Name</label>
+            <input type="text" class="form-control" name="first_name" />
+          </div>
+          <div class="form-group col-md-6">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="last_name" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Verify Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="cpassword"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+    </div>
+    <div class="card-footer text-muted">
+      <a href="/login"> Already have an account? </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const registerForm = document.querySelector(".register-form")
+
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    const formData = {
+      username: registerForm.username.value,
+      email: registerForm.email.value,
+      first_name: registerForm.first_name.value,
+      last_name: registerForm.last_name.value,
+      password: registerForm.password.value,
+      cpassword: registerForm.cpassword.value,
+    }
+
+    fetch("http://localhost:8000/auth/create/user", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data)
+        if (!data.ok) {
+          throw new Error("Invalid request")
+        }
+        window.location.replace("/")
+      })
+      .catch((err) => {
+        console.log("Error", err)
+        window.location.href = "/register"
+      })
+  })
+</script>
+
+{% endblock content %}
