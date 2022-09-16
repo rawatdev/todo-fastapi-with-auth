@@ -41,7 +41,7 @@
   const pathArray = window.location.pathname.split("/")
   const todoId = parseInt(pathArray[pathArray.length - 1])
 
-  fetch(`http://localhost:8000/todos/${todoId}`)
+  fetch(`${API_URL}/todos/${todoId}`)
     .then((res) => res.json())
     .then((todo) => {
       updateForm.title.value = todo.title
@@ -63,7 +63,7 @@
       complete: false,
     }
 
-    fetch(`http://localhost:8000/todos/${todoId}`, {
+    fetch(`${API_URL}/todos/${todoId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@
 
   // Delete Todo
   deleteBtn.addEventListener("click", () => {
-    fetch(`http://localhost:8000/todos/${todoId}`, {
+    fetch(`${API_URL}/todos/${todoId}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

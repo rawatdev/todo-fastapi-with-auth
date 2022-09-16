@@ -19,6 +19,12 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>TodoApp</title>
+    <script>
+      // localhost
+      // const API_URL = "http://localhost:8000"
+
+      const API_URL = "https://todo-fastapi-with-auth.herokuapp.com/"
+    </script>
   </head>
   <body>
     {% include 'navbar.html' %} {% block content %} {% endblock content %}
@@ -28,7 +34,7 @@
       const editPasswordBtn = document.querySelector(".edit-password")
 
       logoutBtn.addEventListener("click", () => {
-        fetch("http://localhost:8000/auth/logout")
+        fetch(`${API_URL}/auth/logout`)
           .then((res) => res.json())
           .then((data) => {
             if (data.ok) {

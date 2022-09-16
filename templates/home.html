@@ -27,7 +27,7 @@
 <script>
   const tableBody = document.querySelector(".table tbody")
 
-  fetch("http://localhost:8000/todos/user")
+  fetch(`${API_URL}/todos/user`)
     .then((res) => res.json())
     .then((todos) => {
       if (todos.detail) {

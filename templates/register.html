@@ -70,7 +70,7 @@
       cpassword: registerForm.cpassword.value,
     }
 
-    fetch("http://localhost:8000/auth/create/user", {
+    fetch(`${API_URL}/auth/create/user`, {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {

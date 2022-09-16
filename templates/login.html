@@ -34,7 +34,7 @@
 
     const formData = new URLSearchParams(new FormData(loginForm))
 
-    fetch("http://localhost:8000/auth/token", {
+    fetch(`${API_URL}/auth/token`, {
       method: "POST",
       body: formData,
       headers: {
